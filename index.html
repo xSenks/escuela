@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Melcita 💙</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #dbefff, #b3daff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* APP */
+.app {
+  width: 100%;
+  max-width: 420px;
+  height: 90vh;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* SCREENS */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.screen.active {
+  display: flex;
+  animation: fade 1s ease;
+}
+
+@keyframes fade {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+h1 {
+  font-size: 1.4rem;
+  color: #03396c;
+  line-height: 1.6;
+}
+
+/* BOTONES */
+button {
+  margin-top: 30px;
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  font-size: 15px;
+}
+
+.next {
+  background: #4da6ff;
+  color: white;
+  box-shadow: 0 0 10px rgba(77,166,255,0.6);
+}
+
+.yes {
+  background: #2ecc71;
+  color: white;
+}
+
+.no {
+  background: #ff4d4d;
+  color: white;
+  position: absolute;
+}
+
+/* MEDUSAS */
+.jelly {
+  position: absolute;
+  font-size: 28px;
+  opacity: 0.2;
+  animation: float 14s linear infinite;
+}
+
+@keyframes float {
+  from {transform: translateY(100vh);}
+  to {transform: translateY(-20vh);}
+}
+
+/* FINAL BONITO */
+.finalMessage {
+  text-align: center;
+  animation: fade 1.5s ease;
+}
+
+.finalMessage h1 {
+  font-size: 1.8rem;
+  color: #03396c;
+  text-shadow: 0 0 15px rgba(77,166,255,0.6);
+}
+
+.finalMessage p {
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* PARTICULAS */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+    
+
+<canvas id="particles"></canvas>
+
+<div class="app" id="app">
+
+<!-- MEDUSAS -->
+<div class="jelly" style="left:10%;">🪼</div>
+<div class="jelly" style="left:40%; animation-delay:4s;">🪼</div>
+<div class="jelly" style="left:70%; animation-delay:8s;">🪼</div>
+
+<!-- SCREENS -->
+<div class="screen active"><div><h1>Melcita mi amor 💙</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Tengo algo que decirte muy importante</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Y como no soy alguien muy creativo, pensé que así sería una buena forma :D</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Desde que nos conocimos supe que serias alguien especial que me importaria mucho</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Y he desarrollado sentimientos por ti durante todo este tiempo</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Me gusta que me quieras aunque este todo pendejo</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Tambien me esta gustando mucho conocerte, es algo que quiero hacer durante mucho tiempo</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Y a pesar de la distancia y lo dificil que puede llegar a ser quiero arriesgarme porque estoy seguro que vale la pena</h1><button class="next">Continuar</button></div></div>
+<div class="screen"><div><h1>Y por esto mismo, quiero pedirte algo muy importante</h1><button class="next">Continuar</button></div></div>
+<div class="screen" id="final">
+  <div>
+    <h1>¿Quieres ser mi novia? 💙</h1>
+    <button class="yes" onclick="accept()">Sí 💙</button>
+    <button class="no" id="noBtn">No</button>
+  </div>
+</div>
+
+</div>
+
+<!-- MUSICA -->
+<audio id="music">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e5b2d9d3.mp3?filename=romantic-ambient-piano-110624.mp3">
+</audio>
+
+<script>
+const screens = document.querySelectorAll(".screen");
+const nextBtns = document.querySelectorAll(".next");
+let current = 0;
+let musicStarted = false;
+const music = document.getElementById("music");
+
+/* AVANCE MANUAL */
+nextBtns.forEach(btn => {
+  btn.onclick = () => {
+
+    if (!musicStarted) {
+      music.volume = 0.3;
+      music.play().catch(()=>{});
+      musicStarted = true;
+    }
+
+    screens[current].classList.remove("active");
+    current++;
+    screens[current].classList.add("active");
+  };
+});
+
+/* BOTON NO */
+const noBtn = document.getElementById("noBtn");
+
+function moveNo() {
+  const app = document.getElementById("app");
+  noBtn.style.left = Math.random()*(app.clientWidth-100)+"px";
+  noBtn.style.top = Math.random()*(app.clientHeight-50)+"px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* FINAL BONITO */
+function accept() {
+  startParticles();
+
+  document.getElementById("final").innerHTML = `
+    <div class="finalMessage">
+      <h1>Sabía que dirías que sí 💙</h1>
+      <p>Ahora sigue la boda>:D 🪼</p>
+    </div>
+  `;
+}
+
+/* PARTICULAS */
+function startParticles(){
+  const canvas = document.getElementById("particles");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let p = [];
+  for(let i=0;i<120;i++){
+    p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,s:Math.random()*3+1});
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    p.forEach(pt=>{
+      pt.y+=1;
+      if(pt.y>canvas.height) pt.y=0;
+      ctx.fillRect(pt.x,pt.y,pt.s,pt.s);
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+</script>
+
+</body>
+</html>
